@@ -1,0 +1,24 @@
+
+// Define service definition of RPC service
+syntax = "proto3";
+
+
+
+service Greeter{
+
+    rpc Hello(HelloRequest) returns (HelloResponse){};
+}
+
+
+
+message HelloRequest{
+
+    string name=1;
+}
+
+
+message HelloResponse{
+
+
+    string greeting = 2;
+}

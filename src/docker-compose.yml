@@ -1,0 +1,13 @@
+# Compose describes container in its RUNNING STATE. Use to build multi-container Docker apps.
+# Dockerfile consist details on how to build single container 
+version: '2'
+
+
+services:
+  microservice:
+    build: .
+    image: gin-web:1.0.1
+    environment: 
+    - PORT=8080
+    ports: 
+    - "8080:8080"

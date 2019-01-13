@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: gin-web
+  labels:
+    app: gin-web
+    tier: service
+spec:
+  
+
+  # use NodePort here to be able to access a port in each Node
+  type: NodePort
+  ports:
+  - port: 9090
+  selector: # From gen-web in k8s-deployment.yml 
+    app: gin-web # Select all apps that has gin-web as label. 

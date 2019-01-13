@@ -1,0 +1,56 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gin-web # Enter deployment name
+  labels:
+   app: gin-web
+spec:
+  
+  replicas: 3 #Enter the number of replicas
+  template:
+    metadata:
+      labels:
+        app: gin-web
+        tier: service
+    spec:
+      imagePullSecrets:
+      - name: regcred 
+      containers:
+      - name: gin-web
+        image: aymanpatel/gin-web:1.0.1
+        ports:
+        - containerPort: 9090
+        env:
+        - name: PORT
+          value: "9090"  
+
+        # define resource requests and limits
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "125m"
+          limits: #k8 automatically restart container when hit with these Limtis
+            memory: "128Mi"
+            cpu: "250m"
+
+         # check if gin-web is alive and healthy
+
+         #Check if MS recieve traffic from k*
+        readinessProbe:
+          httpGet:
+            path: /ping
+            port: 9090
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+          # check for k8 if container is healthy
+        livenessProbe:
+          httpGet: 
+            path: /ping
+            port: 9090
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+         
+
+
+
+
